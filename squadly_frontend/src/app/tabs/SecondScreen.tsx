@@ -6,7 +6,7 @@ export default function SecondScreen() {
     debugger;
     return (
         <SafeAreaView style={styles.container}>
-            <Text>SECOND SCREEN</Text>
+            <Text>SECOND SCREENx</Text>
         </SafeAreaView>
     );
 }
