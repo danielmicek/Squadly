@@ -25,7 +25,6 @@ function getDevMenuHint() {
 
 export default function HomeScreen() {
     console.log('hello world');
-    debugger;
     return (
         <SafeAreaView style={styles.container}>
             <Text>hello world</Text>

@@ -3,7 +3,6 @@ import {StyleSheet, Text} from 'react-native';
 import {BottomTabInset, MaxContentWidth, Spacing} from '@/constants/theme';
 
 export default function SecondScreen() {
-    debugger;
     return (
         <SafeAreaView style={styles.container}>
             <Text>SECOND SCREENx</Text>
