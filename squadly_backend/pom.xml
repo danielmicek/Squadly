@@ -94,6 +94,27 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.hibernate.tool</groupId>
+				<artifactId>hibernate-tools-maven</artifactId>
+				<version>7.3.13.Final</version>
+
+				<dependencies>
+					<dependency>
+						<groupId>org.postgresql</groupId>
+						<artifactId>postgresql</artifactId>
+						<version>${postgresql.version}</version>
+					</dependency>
+				</dependencies>
+
+				<configuration>
+					<ejb3>true</ejb3>
+					<jdk5>true</jdk5>
+					<packageName>com.squadly.Entities</packageName>
+				</configuration>
+			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

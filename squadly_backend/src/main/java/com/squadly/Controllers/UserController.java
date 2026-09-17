@@ -18,8 +18,6 @@ public class UserController {
 
     @GetMapping("/getUserById/{id}")
     public User getUserById(@PathVariable Long id) {
-        User u = userRepository.getReferenceById(id);
-        System.out.println("xxx" + u);
-        return u;
+        return userRepository.getReferenceById(id);
     }
 }
