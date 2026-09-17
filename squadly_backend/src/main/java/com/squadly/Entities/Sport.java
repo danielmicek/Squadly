@@ -1,5 +1,7 @@
 package com.squadly.Entities;
 
+import com.squadly.Enums.SportName;
+import com.squadly.Enums.TypeName;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
@@ -16,12 +18,15 @@ import java.util.Objects;
 public class Sport  implements java.io.Serializable {
     @Id
     @Enumerated
-    private Sport name;
+    private SportName name;
+
+    @Enumerated
+    private TypeName type;
 
     public Sport() {
     }
 
-    public Sport(Sport name) {
+    public Sport(SportName name) {
        this.name = name;
     }
 

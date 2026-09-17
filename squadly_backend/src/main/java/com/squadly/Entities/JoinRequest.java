@@ -1,5 +1,6 @@
 package com.squadly.Entities;
 
+import com.squadly.Enums.SkillLevel;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,9 @@ public class JoinRequest  implements java.io.Serializable {
     @Id
     private long id;
     private LocalDateTime timestamp;
+
+    @Enumerated
+    private SkillLevel skillLevel;
 
     @ManyToOne()
     @JoinColumn(name = "event_id")
@@ -40,12 +44,12 @@ public class JoinRequest  implements java.io.Serializable {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         JoinRequest that = (JoinRequest) o;
-        return id == that.id && Objects.equals(timestamp, that.timestamp) && Objects.equals(event, that.event) && Objects.equals(participant, that.participant) && Objects.equals(owner, that.owner);
+        return id == that.id && Objects.equals(timestamp, that.timestamp) && skillLevel == that.skillLevel && Objects.equals(event, that.event) && Objects.equals(participant, that.participant) && Objects.equals(owner, that.owner);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, timestamp, event, participant, owner);
+        return Objects.hash(id, timestamp, skillLevel, event, participant, owner);
     }
 }
 

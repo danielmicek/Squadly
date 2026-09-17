@@ -1,6 +1,6 @@
 package com.squadly.Entities;
 
-import com.squadly.Enums.Sport;
+import com.squadly.Enums.TypeName;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -22,6 +22,7 @@ public class Event {
     private Long id;
 
     @Enumerated()
+    private TypeName type;
     private Sport sport;
     private LocalDateTime timestamp;
     private int maxParticipants;
@@ -44,11 +45,11 @@ public class Event {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
-        return maxParticipants == event.maxParticipants && Objects.equals(id, event.id) && sport == event.sport && Objects.equals(timestamp, event.timestamp) && Objects.equals(joinRequests, event.joinRequests);
+        return maxParticipants == event.maxParticipants && Objects.equals(id, event.id) && type == event.type && Objects.equals(sport, event.sport) && Objects.equals(timestamp, event.timestamp) && Objects.equals(joinRequests, event.joinRequests);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, sport, timestamp, maxParticipants, joinRequests);
+        return Objects.hash(id, type, sport, timestamp, maxParticipants, joinRequests);
     }
 }

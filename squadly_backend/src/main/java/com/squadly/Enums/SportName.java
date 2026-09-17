@@ -1,6 +1,6 @@
 package com.squadly.Enums;
 
-public enum Sport {
+public enum SportName {
     VOLLEYBALL,
     FOOTBALL,
     GOLF,

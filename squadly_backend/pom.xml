@@ -112,6 +112,7 @@
 					<ejb3>true</ejb3>
 					<jdk5>true</jdk5>
 					<packageName>com.squadly.Entities</packageName>
+					<propertyFile>${project.basedir}/hibernate-tools.properties</propertyFile>
 				</configuration>
 			</plugin>
 
