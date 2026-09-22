@@ -10,6 +10,8 @@
     "@gluestack-ui/utils": "^5.0.1-alpha.0",
     "@legendapp/motion": "^2.4.0",
     "@react-navigation/native": "^7.3.18",
+    "@react-stately/collections": "^3.13.1",
+    "@react-stately/utils": "^3.12.1",
     "axios": "^1.20.0",
     "cors": "^2.8.6",
     "expo": "~57.0.19",

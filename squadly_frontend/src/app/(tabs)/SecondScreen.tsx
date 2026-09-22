@@ -1,22 +1,150 @@
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {useEffect, useState} from 'react';
 import {SafeAreaView} from "react-native-safe-area-context";
 import {BottomTabInset, MaxContentWidth, Spacing} from '@/constants/theme';
 import {styled} from "nativewind";
+import {
+    FormControl,
+    FormControlError,
+    FormControlErrorIcon,
+    FormControlErrorText,
+    FormControlHelper,
+    FormControlHelperText,
+    FormControlLabel,
+    FormControlLabelText,
+} from '@/components/ui/form-control';
+import {AlertCircleIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, Icon} from '@/components/ui/icon';
+import {Input, InputField} from '@/components/ui/input';
 import {Button, ButtonText} from '@/components/ui/button';
-import {GET_user} from "@/methods/fetchMethods";
-
+import {VStack} from '@/components/ui/vstack';
+import {
+    Calendar,
+    CalendarBody,
+    CalendarGrid,
+    CalendarHeader,
+    CalendarHeaderNextButton,
+    CalendarHeaderPrevButton,
+    CalendarHeaderTitle,
+    CalendarWeekDaysHeader,
+} from '@/components/ui/calendar';
+import {
+    Select,
+    SelectBackdrop,
+    SelectContent,
+    SelectDragIndicator,
+    SelectDragIndicatorWrapper,
+    SelectIcon,
+    SelectInput,
+    SelectItem,
+    SelectPortal,
+    SelectTrigger,
+} from '@/components/ui/select';
+import {GET_allSports} from "@/methods/fetchMethods";
 
 const StyledSafeAreaView = styled(SafeAreaView, { className: "style" });
 
 export default function SecondScreen() {
-    return (
-        <StyledSafeAreaView className="flex-1 justify-center flex-col items-center bg-black">
-            <Text className="text-white">SECOND SCREEN</Text>
+    const [isInvalid, setIsInvalid] = useState(false);
+    const [inputValue, setInputValue] = useState('12345');
+    const [selected, setSelected] = useState(new Date());
+    const [sports, setSports] = useState([]);
 
-            <Button variant="default" size="default">
-                <ButtonText onPress={async () => console.log(await GET_user(1))}>Button</ButtonText>
+    useEffect(() => {
+        const loadSports = async () => {
+            const tmp = await GET_allSports();
+            console.log(tmp);
+            setSports(tmp);
+        };
+
+        loadSports();
+    }, []);
+
+    const handleSubmit = () => {
+        if (inputValue.length < 3) {
+            setIsInvalid(true);
+        } else {
+            setIsInvalid(false);
+        }
+    };
+
+    return (
+        <VStack className="bg-black h-screen justify-center">
+            <FormControl
+                isInvalid={isInvalid}
+                isDisabled={false}
+                isReadOnly={false}
+                isRequired={false}
+            >
+                <FormControlLabel>
+                    <FormControlLabelText>Event title</FormControlLabelText>
+                </FormControlLabel>
+                <Input className="my-1" size="">
+                    <InputField
+                        type="text"
+                        placeholder="password"
+                        value={inputValue}
+                        onChangeText={(text) => setInputValue(text)}
+                    />
+                </Input>
+                <FormControlHelper>
+                    <FormControlHelperText>
+                        delete this
+                    </FormControlHelperText>
+                </FormControlHelper>
+                <FormControlError>
+                    <FormControlErrorIcon
+                        as={AlertCircleIcon}
+                        className="text-destructive"
+                    />
+                    <FormControlErrorText className="text-destructive">
+                        At least 3 characters are required.
+                    </FormControlErrorText>
+                </FormControlError>
+            </FormControl>
+
+            <Calendar mode="single" value={selected} onValueChange={setSelected}>
+                <CalendarHeader>
+                    <CalendarHeaderPrevButton>
+                        <Icon as={ChevronLeftIcon} />
+                    </CalendarHeaderPrevButton>
+                    <CalendarHeaderTitle />
+                    <CalendarHeaderNextButton>
+                        <Icon as={ChevronRightIcon} />
+                    </CalendarHeaderNextButton>
+                </CalendarHeader>
+
+                <CalendarWeekDaysHeader />
+
+                <CalendarBody>
+                    <CalendarGrid>{/* Calendar will auto-render the grid */}</CalendarGrid>
+                </CalendarBody>
+            </Calendar>
+
+            <Select>
+                <SelectTrigger variant="outline" size="md">
+                    <SelectInput placeholder="Select option" />
+                    <SelectIcon className="mr-3" as={ChevronDownIcon} />
+                </SelectTrigger>
+                <SelectPortal>
+                    <SelectBackdrop />
+                    <SelectContent className = "bg-black">
+                        <SelectDragIndicatorWrapper>
+                            <SelectDragIndicator />
+                        </SelectDragIndicatorWrapper>
+                        {sports.map((sport) => (
+                            <SelectItem label={sport} value={sport} textStyle={{style: {color: 'white'}}}/>
+                        ))}
+                    </SelectContent>
+                </SelectPortal>
+            </Select>
+
+
+
+
+            <Button className="w-fit self-end mt-4" size="sm" onPress={handleSubmit}>
+                <ButtonText onPress={() => console.log(sports + "")}>Submit</ButtonText>
             </Button>
-        </StyledSafeAreaView>
+        </VStack>
     );
 }
 
