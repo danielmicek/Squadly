@@ -22,7 +22,8 @@ class SecurityConfig {
         http
                 .authorizeHttpRequests((requests) -> requests
                         // public endpoints
-                        .requestMatchers("/", "/home", "/api/users/**").permitAll()
+                        .requestMatchers("/", "/home", "/api/users/**",
+                        "/api/events/**").permitAll()
                         // endpoints that require authentication
                         .anyRequest().authenticated()
                 );
