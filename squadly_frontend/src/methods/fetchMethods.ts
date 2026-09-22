@@ -47,3 +47,14 @@ export async function GET_user(userId){
         throw error;
     }
 }
+
+export async function GET_allSports(userId){
+    const apiClient = createApiClient();
+
+    try {
+        return await apiClient.get(`/api/events/getAllSports`);
+    } catch (error) {
+        if (error.status === 400 || error.status === 404) return null; // no sport found
+        throw error;
+    }
+}
