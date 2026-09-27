@@ -52,7 +52,6 @@ export default function SecondScreen() {
     useEffect(() => {
         const loadSports = async () => {
             const tmp = await GET_allSports();
-            console.log(tmp);
             setSports(tmp);
         };
 
@@ -132,7 +131,7 @@ export default function SecondScreen() {
                             <SelectDragIndicator />
                         </SelectDragIndicatorWrapper>
                         {sports.map((sport) => (
-                            <SelectItem label={sport} value={sport} textStyle={{style: {color: 'white'}}}/>
+                            <SelectItem key = {sport} label={sport} value={sport} textStyle={{style: {color: 'white'}}}/>
                         ))}
                     </SelectContent>
                 </SelectPortal>
