@@ -14,7 +14,7 @@ export default function TabLayout() {
                     height: 64,
                     borderRadius: 24,
                     borderTopWidth: 0,
-                    backgroundColor: 'ffffff',
+                    backgroundColor: '#ffffff',
                     overflow: 'hidden',
                 },
                 tabBarItemStyle: {

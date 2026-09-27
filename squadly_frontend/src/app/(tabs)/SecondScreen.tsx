@@ -8,25 +8,13 @@ import {
     FormControlError,
     FormControlErrorIcon,
     FormControlErrorText,
-    FormControlHelper,
-    FormControlHelperText,
     FormControlLabel,
     FormControlLabelText,
 } from '@/components/ui/form-control';
-import {AlertCircleIcon, ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, Icon} from '@/components/ui/icon';
+import {AlertCircleIcon, CalendarDaysIcon, ChevronDownIcon} from '@/components/ui/icon';
 import {Input, InputField} from '@/components/ui/input';
 import {Button, ButtonText} from '@/components/ui/button';
 import {VStack} from '@/components/ui/vstack';
-import {
-    Calendar,
-    CalendarBody,
-    CalendarGrid,
-    CalendarHeader,
-    CalendarHeaderNextButton,
-    CalendarHeaderPrevButton,
-    CalendarHeaderTitle,
-    CalendarWeekDaysHeader,
-} from '@/components/ui/calendar';
 import {
     Select,
     SelectBackdrop,
@@ -39,15 +27,29 @@ import {
     SelectPortal,
     SelectTrigger,
 } from '@/components/ui/select';
-import {GET_allSports} from "@/methods/fetchMethods";
+import {GET_allSports, GET_allTypes} from "@/methods/fetchMethods";
+import {
+    DateTimePicker,
+    DateTimePickerIcon,
+    DateTimePickerInput,
+    DateTimePickerTrigger,
+} from '@/components/ui/date-time-picker';
+import {Box} from '@/components/ui/box';
+import {Switch} from '@/components/ui/switch';
 
 const StyledSafeAreaView = styled(SafeAreaView, { className: "style" });
 
 export default function SecondScreen() {
     const [isInvalid, setIsInvalid] = useState(false);
-    const [inputValue, setInputValue] = useState('12345');
-    const [selected, setSelected] = useState(new Date());
+    const [title, setTitle] = useState('12345');
+    const [timeDate, setTimeDate] = useState(new Date());
     const [sports, setSports] = useState([]);
+    const [types, setTypes] = useState([]);
+    const [selectedSport, setSelectedSport] = useState("");
+    const [selectedSType, setSelectedSType] = useState("");
+    const [maxParticipants, setMaxParticipants] = useState(null);
+    const [willParticipate, setWillParticipate] = useState(true);
+    const [date, setDate] = useState(new Date());
 
     useEffect(() => {
         const loadSports = async () => {
@@ -55,15 +57,17 @@ export default function SecondScreen() {
             setSports(tmp);
         };
 
+        const loadTypes = async () => {
+            const tmp = await GET_allTypes();
+            setTypes(tmp);
+        };
+
         loadSports();
+        loadTypes();
     }, []);
 
-    const handleSubmit = () => {
-        if (inputValue.length < 3) {
-            setIsInvalid(true);
-        } else {
-            setIsInvalid(false);
-        }
+    function  handleSubmit(eventData){
+        console.log(eventData);
     };
 
     return (
@@ -79,17 +83,12 @@ export default function SecondScreen() {
                 </FormControlLabel>
                 <Input className="my-1" size="">
                     <InputField
-                        type="text"
                         placeholder="password"
-                        value={inputValue}
-                        onChangeText={(text) => setInputValue(text)}
+                        value={title}
+                        onChangeText={(text) => setTitle(text)}
                     />
                 </Input>
-                <FormControlHelper>
-                    <FormControlHelperText>
-                        delete this
-                    </FormControlHelperText>
-                </FormControlHelper>
+
                 <FormControlError>
                     <FormControlErrorIcon
                         as={AlertCircleIcon}
@@ -101,27 +100,15 @@ export default function SecondScreen() {
                 </FormControlError>
             </FormControl>
 
-            <Calendar mode="single" value={selected} onValueChange={setSelected}>
-                <CalendarHeader>
-                    <CalendarHeaderPrevButton>
-                        <Icon as={ChevronLeftIcon} />
-                    </CalendarHeaderPrevButton>
-                    <CalendarHeaderTitle />
-                    <CalendarHeaderNextButton>
-                        <Icon as={ChevronRightIcon} />
-                    </CalendarHeaderNextButton>
-                </CalendarHeader>
-
-                <CalendarWeekDaysHeader />
-
-                <CalendarBody>
-                    <CalendarGrid>{/* Calendar will auto-render the grid */}</CalendarGrid>
-                </CalendarBody>
-            </Calendar>
-
-            <Select>
+            <FormControlLabel>
+                <FormControlLabelText>Sport</FormControlLabelText>
+            </FormControlLabel>
+            <Select
+                selectedValue={selectedSport}
+                onValueChange={(value) => setSelectedSport(value)}
+            >
                 <SelectTrigger variant="outline" size="md">
-                    <SelectInput placeholder="Select option" />
+                    <SelectInput placeholder="Select sport" />
                     <SelectIcon className="mr-3" as={ChevronDownIcon} />
                 </SelectTrigger>
                 <SelectPortal>
@@ -137,12 +124,90 @@ export default function SecondScreen() {
                 </SelectPortal>
             </Select>
 
+            <FormControlLabel>
+                <FormControlLabelText>Area type</FormControlLabelText>
+            </FormControlLabel>
+            <Select
+                selectedValue={selectedType}
+                onValueChange={(value) => setSelectedType(value)}
+            >
+                <SelectTrigger variant="outline" size="md">
+                    <SelectInput placeholder="Select area type" />
+                    <SelectIcon className="mr-3" as={ChevronDownIcon} />
+                </SelectTrigger>
+                <SelectPortal>
+                    <SelectBackdrop />
+                    <SelectContent className = "bg-black">
+                        <SelectDragIndicatorWrapper>
+                            <SelectDragIndicator />
+                        </SelectDragIndicatorWrapper>
+                        {types.map((type) => (
+                            <SelectItem key = {type} label={type} value={type} textStyle={{style: {color: 'white'}}}/>
+                        ))}
+                    </SelectContent>
+                </SelectPortal>
+            </Select>
+
+            <FormControlLabel>
+                <FormControlLabelText>Max participants</FormControlLabelText>
+            </FormControlLabel>
+            <Input>
+                <InputField
+                    keyboardType="numeric"
+                    placeholder="Number of participants"
+                    onChangeText={(text) => setMaxParticipants(text)}
+                />
+            </Input>
+
+            <FormControlLabel>
+                <FormControlLabelText>Event date</FormControlLabelText>
+            </FormControlLabel>
+            <Box className="w-full">
+                <DateTimePicker
+                    value={dateTime}
+                    onChange={setTimeDate}
+                    mode="datetime"
+                    placeholder="Select date and time"
+                >
+                    <DateTimePickerTrigger>
+                        <DateTimePickerInput />
+                        <DateTimePickerIcon as={CalendarDaysIcon} />
+                    </DateTimePickerTrigger>
+                </DateTimePicker>
+            </Box>
+
+            <FormControlLabel>
+                <FormControlLabelText>I will participate</FormControlLabelText>
+            </FormControlLabel>
+            <Box className="flex flex-row justify-start">
+                <Switch
+                    size="lg"
+                    isDisabled={false}
+                    trackColor={{ false: '#525252', true: '#ff8a26' }}
+                    thumbColor="#fafafa"
+                    activeThumbColor="#fafafa"
+                    ios_backgroundColor="#d4d4d4"
+                    onToggle = {(value) => setWillParticipate(value)}
+                />
+            </Box>
 
 
-
-            <Button className="w-fit self-end mt-4" size="sm" onPress={handleSubmit}>
-                <ButtonText onPress={() => console.log(sports + "")}>Submit</ButtonText>
+            <Button className="w-fit self-end mt-4" size="sm"
+                    onPress={() => handleSubmit(
+                        {
+                            "title": title,
+                            "type": type,
+                            "sport": sport,
+                            "timestamp": timeDate,
+                            "maxParticipants": maxParticipants,
+                            "actualParticipants": willParticipate ? 1 : 0,
+                            "joinRequests": []
+                        }
+                    )}
+            >
+                <ButtonText>Create event</ButtonText>
             </Button>
+
         </VStack>
     );
 }
@@ -153,6 +218,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         alignItems: 'center'
+    },
+    map: {
+        width: '100%',
+        height: '100%',
     },
     safeArea: {
         flex: 1,

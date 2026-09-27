@@ -33,18 +33,13 @@ export default function HomeScreen() {
                         </View>
                         <Text style={styles.brandName}>SQUADLY</Text>
                     </View>
-
-                    <View style={styles.livePill}>
-                        <View style={styles.liveDot} />
-                        <Text style={styles.liveText}>READY TO PLAY</Text>
-                    </View>
                 </View>
 
                 <View style={[styles.content, isWide && styles.contentWide]}>
                     <View style={[styles.hero, isWide && styles.heroWide]}>
                         <View style={styles.eyebrowRow}>
                             <View style={styles.eyebrowLine} />
-                            <Text style={styles.eyebrow}>YOUR GAME. YOUR PEOPLE.</Text>
+                            <Text style={styles.eyebrow}>YOUR PEOPLE. YOUR GAME.</Text>
                         </View>
 
                         <Text
@@ -78,7 +73,6 @@ export default function HomeScreen() {
                     </View>
                 </View>
 
-                <Text style={styles.footer}>PLAY · CONNECT · COMPETE</Text>
             </SafeAreaView>
         </View>
     );
@@ -141,17 +135,6 @@ const styles = StyleSheet.create({
         fontSize: 19,
         fontWeight: '900',
         letterSpacing: 2.4,
-    },
-    livePill: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 7,
-        paddingHorizontal: 11,
-        paddingVertical: 7,
-        borderRadius: 999,
-        borderWidth: 1,
-        borderColor: 'rgba(255,255,255,0.18)',
-        backgroundColor: 'rgba(5,10,7,0.42)',
     },
     liveDot: {
         width: 6,
@@ -252,12 +235,5 @@ const styles = StyleSheet.create({
     authAreaWide: {
         width: 380,
         flexShrink: 0,
-    },
-    footer: {
-        color: 'rgba(255,255,255,0.38)',
-        fontSize: 9,
-        fontWeight: '800',
-        letterSpacing: 2.4,
-        textAlign: 'center',
-    },
+    }
 });
