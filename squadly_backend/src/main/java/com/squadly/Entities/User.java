@@ -1,7 +1,6 @@
 package com.squadly.Entities;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,9 +13,7 @@ import java.util.Objects;
 @Table(name = "\"user\"")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    @Setter(AccessLevel.NONE)
     private Long id;
 
     @Setter

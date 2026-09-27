@@ -3,6 +3,7 @@ package com.squadly.Controllers;
 import com.squadly.DataTransferObjects.EventDto;
 import com.squadly.Entities.Event;
 import com.squadly.Enums.Sport;
+import com.squadly.Enums.TypeName;
 import com.squadly.Repositories.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,14 +41,32 @@ public class EventController {
         return Arrays.asList(Sport.values());
     }
 
+    @GetMapping("/getAllTypes")
+    @CrossOrigin(origins = {
+            "http://localhost:8081",
+            "exp://192.168.0.183:8081"
+    })
+    public List<TypeName> getAllTypes() {
+        return Arrays.asList(TypeName.values());
+    }
+
     @PostMapping("/createEvent")
     @CrossOrigin(origins = {
             "http://localhost:8081",
             "exp://192.168.0.183:8081"
     })
     public ResponseEntity<String> createEvent(@RequestBody Event event) {
+        List<Sport> listOfSports = Arrays.asList(Sport.values());
+        List<TypeName> listOfTypes = Arrays.asList(TypeName.values());
+
+        if(event.getTitle() == null || event.getTitle().isBlank()) return ResponseEntity.badRequest().body("Title is required.");
+        if(event.getMaxParticipants() <= 0) return ResponseEntity.badRequest().body("Max participants must be positive number.");
+        if(event.getTimestamp() == null || event.getTimestamp().isBefore(LocalDateTime.now())) return ResponseEntity.badRequest().body("Event must be in the future.");
+        if(event.getSport() == null || !listOfSports.contains(event.getSport())) return ResponseEntity.badRequest().body("Sport not valid.");
+        if(event.getType() == null || !listOfTypes.contains(event.getType())) return ResponseEntity.badRequest().body("Are type not valid.");
+
         eventRepository.saveAndFlush(event);
-        return ResponseEntity.ok("POST request successful");
+        return ResponseEntity.ok("New event created successfully.");
     }
 
     @PatchMapping("/editEvent/{id}")
