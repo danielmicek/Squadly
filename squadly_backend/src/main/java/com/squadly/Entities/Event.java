@@ -1,5 +1,6 @@
 package com.squadly.Entities;
 
+import com.squadly.Enums.Sport;
 import com.squadly.Enums.TypeName;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -14,42 +15,49 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
-public class Event {
+public class Event implements java.io.Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     @Setter(AccessLevel.NONE)
     private Long id;
 
-    @Enumerated()
+    @Enumerated(EnumType.STRING)
     private TypeName type;
+
+    @Enumerated(EnumType.STRING)
     private Sport sport;
-    private LocalDateTime timestamp;
-    private int maxParticipants;
 
     @OneToMany(mappedBy = "event")
     List<JoinRequest> joinRequests;
 
+    private LocalDateTime timestamp;
+    private int maxParticipants;
+    private int actualParticipants;
+    private String title;
+
     public Event(){
         this.joinRequests = new ArrayList<>();
-    }
-
-    public Event(Sport sport, LocalDateTime timestamp, int maxParticipants){
-        this.joinRequests = new ArrayList<>();
-        this.sport = sport;
-        this.timestamp = timestamp;
-        this.maxParticipants = maxParticipants;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Event event = (Event) o;
-        return maxParticipants == event.maxParticipants && Objects.equals(id, event.id) && type == event.type && Objects.equals(sport, event.sport) && Objects.equals(timestamp, event.timestamp) && Objects.equals(joinRequests, event.joinRequests);
+        return maxParticipants == event.maxParticipants && actualParticipants == event.actualParticipants && Objects.equals(id, event.id) && type == event.type && sport == event.sport && Objects.equals(joinRequests, event.joinRequests) && Objects.equals(timestamp, event.timestamp) && Objects.equals(title, event.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, type, sport, timestamp, maxParticipants, joinRequests);
+        return Objects.hash(id, type, sport, joinRequests, timestamp, maxParticipants, actualParticipants, title);
     }
+
+    public Event(Sport sport, LocalDateTime timestamp, int maxParticipants, int actualParticipants){
+        this.joinRequests = new ArrayList<>();
+        this.sport = sport;
+        this.timestamp = timestamp;
+        this.maxParticipants = maxParticipants;
+        this.actualParticipants = actualParticipants;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.squadly.Controllers;
 import com.squadly.Entities.User;
 import com.squadly.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -20,5 +21,15 @@ public class UserController {
     })
     public User getUserById(@PathVariable Long id) {
         return userRepository.getReferenceById(id);
+    }
+
+    @PostMapping("/createUser")
+    @CrossOrigin(origins = {
+            "http://localhost:8081",
+            "exp://192.168.0.183:8081"
+    })
+    public ResponseEntity<String> createUser(@RequestBody User user) {
+        userRepository.saveAndFlush(user);
+        return ResponseEntity.ok("New user created successfully.");
     }
 }

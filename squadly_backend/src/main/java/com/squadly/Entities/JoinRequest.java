@@ -2,18 +2,23 @@ package com.squadly.Entities;
 
 import com.squadly.Enums.SkillLevel;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 @Table(name="join_request")
-public class JoinRequest  implements java.io.Serializable {
+public class JoinRequest implements java.io.Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
+    @Setter(AccessLevel.NONE)
     private long id;
     private LocalDateTime timestamp;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private SkillLevel skillLevel;
 
     @ManyToOne()
