@@ -13,12 +13,22 @@ export function SportsVideoBackground() {
     return (
         <VideoView
             player={player}
-            style={StyleSheet.absoluteFill}
+            style={styles.video}
             contentFit="cover"
             nativeControls={false}
             allowsFullscreen={false}
             allowsPictureInPicture={false}
-            pointerEvents="none"
         />
     );
 }
+
+const styles = StyleSheet.create({
+    video: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+    },
+});

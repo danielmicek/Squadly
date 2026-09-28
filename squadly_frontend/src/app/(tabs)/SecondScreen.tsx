@@ -1,8 +1,9 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useEffect, useState} from 'react';
 import {SafeAreaView} from "react-native-safe-area-context";
 import {BottomTabInset, MaxContentWidth, Spacing} from '@/constants/theme';
 import {styled} from "nativewind";
+import MapView from 'react-native-maps';
 import {
     FormControl,
     FormControlError,
@@ -42,11 +43,11 @@ const StyledSafeAreaView = styled(SafeAreaView, { className: "style" });
 export default function SecondScreen() {
     const [isInvalid, setIsInvalid] = useState(false);
     const [title, setTitle] = useState('12345');
-    const [timeDate, setTimeDate] = useState(new Date());
+    const [dateTime, setDateTime] = useState(new Date());
     const [sports, setSports] = useState([]);
     const [types, setTypes] = useState([]);
     const [selectedSport, setSelectedSport] = useState("");
-    const [selectedSType, setSelectedSType] = useState("");
+    const [selectedType, setSelectedType] = useState("");
     const [maxParticipants, setMaxParticipants] = useState(null);
     const [willParticipate, setWillParticipate] = useState(true);
     const [date, setDate] = useState(new Date());
@@ -165,7 +166,7 @@ export default function SecondScreen() {
             <Box className="w-full">
                 <DateTimePicker
                     value={dateTime}
-                    onChange={setTimeDate}
+                    onChange={setDateTime}
                     mode="datetime"
                     placeholder="Select date and time"
                 >
@@ -196,9 +197,9 @@ export default function SecondScreen() {
                     onPress={() => handleSubmit(
                         {
                             "title": title,
-                            "type": type,
-                            "sport": sport,
-                            "timestamp": timeDate,
+                            "type": selectedType,
+                            "sport": selectedSport,
+                            "timestamp": dateTime,
                             "maxParticipants": maxParticipants,
                             "actualParticipants": willParticipate ? 1 : 0,
                             "joinRequests": []
@@ -207,6 +208,10 @@ export default function SecondScreen() {
             >
                 <ButtonText>Create event</ButtonText>
             </Button>
+
+            <View style={styles.container}>
+                <MapView style={styles.map} />
+            </View>
 
         </VStack>
     );
