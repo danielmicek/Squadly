@@ -1,4 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import {Tabs} from 'expo-router';
 
 export default function TabLayout() {
@@ -32,10 +33,17 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="SecondScreen"
+                name="CreateEvent"
                 options={{
-                    title: 'SecondScreen',
-                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+                    title: 'Create Event',
+                    tabBarIcon: ({ color }) => <FontAwesome6 size={28} name="calendar" color={color} />,
+                }}
+            />
+            <Tabs.Screen
+                name="JoinEvent"
+                options={{
+                    title: 'Join Event',
+                    tabBarIcon: ({ color }) => <FontAwesome6 size={28} name="volleyball" color={color} />,
                 }}
             />
         </Tabs>

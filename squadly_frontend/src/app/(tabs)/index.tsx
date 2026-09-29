@@ -52,20 +52,9 @@ export default function HomeScreen() {
                             Find your{`\n`}next game.
                         </Text>
                         <Text style={styles.subheadline}>
-                            Meet players nearby, build your squad and turn free time into game time.
+                            Find events nearby, build your squad and turn free time into game time.
                         </Text>
 
-                        <View style={styles.sportTags}>
-                            <View style={styles.sportTag}>
-                                <Text style={styles.sportTagText}>FOOTBALL</Text>
-                            </View>
-                            <View style={styles.sportTag}>
-                                <Text style={styles.sportTagText}>BASKETBALL</Text>
-                            </View>
-                            <View style={styles.sportTag}>
-                                <Text style={styles.sportTagText}>MORE</Text>
-                            </View>
-                        </View>
                     </View>
 
                     <View style={[styles.authArea, isWide && styles.authAreaWide]}>

@@ -69,3 +69,14 @@ export async function GET_allTypes(){
         throw error;
     }
 }
+
+export async function POST_newEvent(event: Event){
+    const apiClient = createApiClient();
+
+    try {
+        return await apiClient.post(`/api/events/createEvent`, event);
+    } catch (error) {
+        if (error.status === 400 || error.status === 404) return null; // no sport found
+        throw error;
+    }
+}
