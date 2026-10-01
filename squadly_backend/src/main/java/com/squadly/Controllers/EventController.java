@@ -63,7 +63,8 @@ public class EventController {
         if(event.getMaxParticipants() <= 0) return ResponseEntity.badRequest().body("Max participants must be positive number.");
         if(event.getTimestamp() == null || event.getTimestamp().isBefore(LocalDateTime.now())) return ResponseEntity.badRequest().body("Event must be in the future.");
         if(event.getSport() == null || !listOfSports.contains(event.getSport())) return ResponseEntity.badRequest().body("Sport not valid.");
-        if(event.getType() == null || !listOfTypes.contains(event.getType())) return ResponseEntity.badRequest().body("Are type not valid.");
+        if(event.getType() == null || !listOfTypes.contains(event.getType())) return ResponseEntity.badRequest().body("Type not valid.");
+        if(event.getLocation() == null || event.getLocation().getLatitude() == null || event.getLocation().getLongitude() == null) return ResponseEntity.badRequest().body("Location is required..");
 
         eventRepository.saveAndFlush(event);
         return ResponseEntity.ok("New event created successfully.");
