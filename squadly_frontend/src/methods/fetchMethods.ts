@@ -1,5 +1,5 @@
 import axios from "axios";
-import {Platform} from 'react-native';
+import {Alert, Platform} from 'react-native';
 
 const API_BASE_URL = Platform.select({
     web: 'http://localhost:8080',
@@ -76,7 +76,9 @@ export async function POST_newEvent(event: Event){
     try {
         return await apiClient.post(`/api/events/createEvent`, event);
     } catch (error) {
-        if (error.status === 400 || error.status === 404) return null; // no sport found
-        throw error;
+        const message =
+            error instanceof Error ? error.message : 'Unknown error';
+
+        Alert.alert('Error', message);
     }
 }

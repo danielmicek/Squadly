@@ -72,6 +72,7 @@ export default function CreateEvent() {
 
     function handleSubmit(eventData){
         console.log(eventData);
+        console.log(eventLocation);
         POST_newEvent(eventData)
 
     };
@@ -90,7 +91,7 @@ export default function CreateEvent() {
                     </FormControlLabel>
                     <Input className="my-1" size="">
                         <InputField
-                            placeholder="password"
+                            placeholder="Title"
                             value={title}
                             onChangeText={(text) => setTitle(text)}
                         />
@@ -209,8 +210,11 @@ export default function CreateEvent() {
                                 "timestamp": dateTime,
                                 "maxParticipants": maxParticipants,
                                 "actualParticipants": willParticipate ? 1 : 0,
-                                "joinRequests": []
-                                
+                                "joinRequests": [],
+                                "location": {
+                                    "latitude": eventLocation.latitude,
+                                    "longitude": eventLocation.longitude,
+                                }
                             }
                         )}
                 >

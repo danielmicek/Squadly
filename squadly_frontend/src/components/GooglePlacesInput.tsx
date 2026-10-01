@@ -10,8 +10,10 @@ export default function GooglePlacesInput({
         <GooglePlacesTextInput
             apiKey={googleMapsApiKey}
             onPlaceSelect={(selectedLocation) => {
-                setEventLocation(location)
-
+                setEventLocation({
+                    "latitude" : selectedLocation.details.location.latitude,
+                    "longitude" : selectedLocation.details.location.longitude,
+                })
                 // Moves the map to the selected location
                 mapRef.current?.animateToRegion({
                     latitude: selectedLocation.details.location.latitude,
