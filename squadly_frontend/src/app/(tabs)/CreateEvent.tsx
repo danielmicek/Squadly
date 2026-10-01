@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {SafeAreaView} from "react-native-safe-area-context";
 import {BottomTabInset, MaxContentWidth, Spacing} from '@/constants/theme';
 import {styled} from "nativewind";
@@ -37,6 +37,7 @@ import {
 } from '@/components/ui/date-time-picker';
 import {Box} from '@/components/ui/box';
 import {Switch} from '@/components/ui/switch';
+import MapView from "react-native-maps";
 
 const StyledSafeAreaView = styled(SafeAreaView, { className: "style" });
 
@@ -49,8 +50,10 @@ export default function CreateEvent() {
     const [selectedSport, setSelectedSport] = useState("");
     const [selectedType, setSelectedType] = useState("");
     const [maxParticipants, setMaxParticipants] = useState(null);
+    const [eventLocation, setEventLocation] = useState(null);
     const [willParticipate, setWillParticipate] = useState(true);
     const [date, setDate] = useState(new Date());
+    const mapRef = useRef<MapView>(null);
 
     useEffect(() => {
         const loadSports = async () => {
@@ -207,13 +210,17 @@ export default function CreateEvent() {
                                 "maxParticipants": maxParticipants,
                                 "actualParticipants": willParticipate ? 1 : 0,
                                 "joinRequests": []
+                                
                             }
                         )}
                 >
                     <ButtonText>Create event</ButtonText>
                 </Button>
 
-                <Map/>
+                <Map location = {eventLocation}
+                     setLocation = {setEventLocation}
+                     mapRef={mapRef}
+                />
 
             </VStack>
         </StyledSafeAreaView>

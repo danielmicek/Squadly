@@ -1,12 +1,13 @@
 import {StyleSheet, View} from 'react-native';
-import {useRef, useState} from 'react';
 import MapView from "react-native-maps";
 import {BottomTabInset, MaxContentWidth, Spacing} from "@/constants/theme";
-import Geolocation from '@react-native-community/geolocation'
+import Geolocation from '@react-native-community/geolocation';
+import GooglePlacesInput from "@/components/GooglePlacesInput"
 
-export default function Map(){
-    const mapRef = useRef<MapView>(null);
-    const [location, setLocation] = useState(0);
+export default function Map({
+                                location,
+                                setLocation,
+                                mapRef}){
 
     const getMyLocation = () => {
         Geolocation.getCurrentPosition((location) => {
@@ -35,10 +36,12 @@ export default function Map(){
 
     return (
         <View style={styles.container}>
+            <GooglePlacesInput setEventLocation = {setLocation} mapRef={mapRef} />
             <MapView style={styles.map}
                      provider="PROVIDER_GOOGLE"
                      onMapReady={() => getMyLocation()}
                      ref={mapRef}
+                     showsCompass = {true}
                      initialRegion={{
                          latitude: 48.1486,
                          longitude: 17.1077,
@@ -53,9 +56,9 @@ export default function Map(){
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        flexDirection: 'row',
-        alignItems: 'center'
+        flexDirection: 'col',
+        alignItems: 'stretch',
+        gap: 12
     },
     map: {
         width: '100%',
