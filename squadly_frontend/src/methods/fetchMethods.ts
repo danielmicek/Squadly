@@ -82,3 +82,16 @@ export async function POST_newEvent(event: Event){
         Alert.alert('Error', message);
     }
 }
+
+
+// --------------------- WEB SOCKETS ----------------------------
+export function sendMessage(message, client){
+
+    client?.publish({
+        destination: '/app/chat',
+        body: JSON.stringify({
+            conversationId: 1,
+            text: {message}
+        }),
+    });
+}

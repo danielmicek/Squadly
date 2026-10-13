@@ -3,9 +3,10 @@ import {useEffect, useState} from 'react';
 import {SafeAreaView} from "react-native-safe-area-context";
 import {BottomTabInset, MaxContentWidth, Spacing} from '@/constants/theme';
 import {styled} from "nativewind";
-import Map from "@/components/Map"
 import {VStack} from '@/components/ui/vstack';
 import {GET_allSports, GET_allTypes, POST_newEvent} from "@/methods/fetchMethods";
+import {Chat} from "@/components/Chat";
+import type {IMessage} from "react-native-gifted-chat";
 
 const StyledSafeAreaView = styled(SafeAreaView, { className: "style" });
 
@@ -20,6 +21,7 @@ export default function CreateEventForm() {
     const [maxParticipants, setMaxParticipants] = useState(null);
     const [willParticipate, setWillParticipate] = useState(true);
     const [date, setDate] = useState(new Date());
+    const [messages, setMessages] = useState<IMessage[]>([])
 
     useEffect(() => {
         const loadSports = async () => {
@@ -43,10 +45,10 @@ export default function CreateEventForm() {
     };
 
     return (
-        <StyledSafeAreaView className="bg-black">
-            <VStack className="bg-black h-screen justify-center">
+        <StyledSafeAreaView className="flex-1 bg-black">
+            <VStack className="flex-1 bg-black pb-20">
+                <Chat messages={messages} setMessages={setMessages} />
 
-                <Map/>
 
             </VStack>
         </StyledSafeAreaView>

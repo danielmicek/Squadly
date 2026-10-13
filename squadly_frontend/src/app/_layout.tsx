@@ -1,7 +1,6 @@
-import { ClerkProvider } from '@clerk/expo';
-import { tokenCache } from '@clerk/expo/token-cache';
+import {ClerkProvider} from '@clerk/expo';
 import {Stack} from 'expo-router';
-
+import {StompProvider} from '@/providers/StompProvider'
 import {GluestackUIProvider} from '@/components/ui/gluestack-ui-provider';
 import '@/global.css';
 
@@ -13,12 +12,14 @@ if (!publishableKey) {
 
 export default function Layout() {
     return (
-    <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
-      <GluestackUIProvider mode="dark">
-        <Stack>
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          </Stack>
-      </GluestackUIProvider>
-    </ClerkProvider>
+    <StompProvider>
+        <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+            <GluestackUIProvider mode="dark">
+                <Stack>
+                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                </Stack>
+            </GluestackUIProvider>
+        </ClerkProvider>
+    </StompProvider>
   );
 }
