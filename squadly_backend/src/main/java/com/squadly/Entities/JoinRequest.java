@@ -21,7 +21,7 @@ public class JoinRequest implements java.io.Serializable {
     @Enumerated(EnumType.STRING)
     private SkillLevel skillLevel;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "event_id")
     private Event event;
 
