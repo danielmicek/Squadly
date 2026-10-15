@@ -28,7 +28,7 @@ export function Chat({
                 text: 'Hello developer',
                 createdAt: new Date(),
                 user: {
-                    _id: 2,
+                    _id: '2',
                     name: 'John Doe',
                     avatar: 'https://placeimg.com/140/140/any',
                 },
@@ -38,7 +38,7 @@ export function Chat({
                 text: 'Hello tester',
                 createdAt: new Date(),
                 user: {
-                    _id: 1,
+                    _id: '1',
                     name: 'Kim Kardashian',
                     avatar: 'https://placeimg.com/140/140/any',
                 },
@@ -61,7 +61,7 @@ export function Chat({
             onSend={messages => onSend(messages)}
             isScrollToBottomEnabled
             user={{
-                _id: 1,
+                _id: userId ?? '',
             }}
             keyboardAvoidingViewProps={{ keyboardVerticalOffset: headerHeight }}
         />

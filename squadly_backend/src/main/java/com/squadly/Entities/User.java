@@ -13,8 +13,8 @@ import java.util.Objects;
 @Table(name = "\"user\"")
 public class User {
     @Id
-    @Column(nullable = false)
-    private Long id;
+    @Column(nullable = false, length = 255)
+    private String id;
 
     @Setter
     private String name;
@@ -25,6 +25,9 @@ public class User {
     @OneToMany(mappedBy = "owner")
     List<JoinRequest> ownedJoinRequests;
 
+    @OneToMany(mappedBy = "conversationParticipant")
+    List<ConversationParticipant> conversationParticipants = new ArrayList<>();
+
     protected User() {
         this.ownedJoinRequests = new ArrayList<>();
         this.participantJoinRequests = new ArrayList<>();
@@ -34,6 +37,11 @@ public class User {
         this.name = name;
         this.ownedJoinRequests = new ArrayList<>();
         this.participantJoinRequests = new ArrayList<>();
+    }
+
+    public User(String id, String name) {
+        this(name);
+        this.id = id;
     }
 
     @Override

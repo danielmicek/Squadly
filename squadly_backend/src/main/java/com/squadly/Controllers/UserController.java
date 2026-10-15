@@ -19,7 +19,7 @@ public class UserController {
             "http://localhost:8081",
             "exp://192.168.0.183:8081"
     })
-    public User getUserById(@PathVariable Long id) {
+    public User getUserById(@PathVariable String id) {
         return userRepository.getReferenceById(id);
     }
 

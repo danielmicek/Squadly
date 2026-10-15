@@ -8,20 +8,37 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "Message")
+@Table(name = "message")
 public class ChatMessage {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
+    @EmbeddedId
     @Setter(AccessLevel.NONE)
-    private Long id;
+    private ConversationMessageId id;
 
-    private User fromUser;
-    private User toUser;
+    @MapsId("senderId")
+    @ManyToOne   // jednosmerny vztah
+    @JoinColumn(name = "sender_id")
+    private User sender;
+
+    @MapsId("receiverId")
+    @ManyToOne   // jednosmerny vztah
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
 
     @ManyToOne
-    @JoinColumn(name = "conversation_id")
+    @JoinColumns({
+            @JoinColumn(
+                    name = "conversation_sender_id",
+                    referencedColumnName = "sender_id"
+            ),
+            @JoinColumn(
+                    name = "conversation_receiver_id",
+                    referencedColumnName = "receiver_id"
+            )
+    })
     private Conversation conversation;
+
+    private String body;
+
 
 }
